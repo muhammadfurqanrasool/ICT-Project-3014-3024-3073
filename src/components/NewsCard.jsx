@@ -6,7 +6,7 @@ import { FaHeart } from 'react-icons/fa6'
 import { PiPaperPlaneTiltBold } from 'react-icons/pi'
 
 
-const NewsCard = ({postData={user : {fullName: "Unknown", photoURL: "/assets/user-male-cirlce.jpg"}, content: " Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem iste eius similique labore voluptatem. Vitae nulla perspiciatis earum cupiditate obcaecati!",photoURL: "/assets/windows11.png"}}) => {
+const NewsCard = ({postData}) => {
     const [liked,setLiked] = useState(false);
     function clicked() {
         setLiked(prev => !prev);
@@ -16,9 +16,9 @@ const NewsCard = ({postData={user : {fullName: "Unknown", photoURL: "/assets/use
         <div className="head">
             <div className="user">
                 <div className="img">
-                    <img src={"/assets/user-male-circle.jpg"} alt="" />
+                    <img src={postData?.authorPhotoURL} alt="" />
                 </div>
-                        <span>{"John Doe"}</span>
+                        <span>{postData?.author}</span>
             </div>
             <div className="options">
                 <SlOptions />
@@ -26,11 +26,11 @@ const NewsCard = ({postData={user : {fullName: "Unknown", photoURL: "/assets/use
             </div>
         </div>
         <div className="postContent">
-            {postData.content}
+            {postData?.captions}
         </div>
         <div onDoubleClick={clicked} className="postImg">
            {liked && <FaHeart  className='filled'/>}
-            <img src={postData.photoURL || "/assets/windows11.png"} alt="img" />
+            <img src={postData?.photoURL} alt="img" />
         </div>
         <div className="reactions">
             

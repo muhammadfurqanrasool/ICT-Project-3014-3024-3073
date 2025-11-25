@@ -46,3 +46,12 @@
     height: 50px;
     width: 50px;
 }
+.person .grp {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.addme.friended {
+    background-color: var(--color-lime);
+}

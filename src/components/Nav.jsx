@@ -8,6 +8,7 @@ import {useAuth} from "../context/AuthContext";
 import { LogOutIcon } from "lucide-react"
 import "../css/style.css"
 import { appName } from "../utils"
+import { IoLogoOctocat } from "react-icons/io"
 const Nav = () => {
   const location = useLocation();
   const {User, LogOut} = useAuth();
@@ -15,7 +16,7 @@ const Nav = () => {
   return (
     <nav>
         <div className="logo">
-            <FaFacebook />
+            <IoLogoOctocat />
             <div className="input">
                 <div className="searchIcon"><CiSearch /></div>
                 <input type="text" placeholder={`Search ${appName}`} />
@@ -34,7 +35,7 @@ const Nav = () => {
                       <img src={User?.photoURL} alt="" />
                     </div>
                 </div>
-                <span className=".logout-btn" onClick={()=>LogOut()}><LogOutIcon/></span>
+                <span className="logout-btn" onClick={()=>LogOut()}><LogOutIcon/></span>
         </div>
     </nav>
   )

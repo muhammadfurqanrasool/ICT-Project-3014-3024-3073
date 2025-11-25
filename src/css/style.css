@@ -87,7 +87,10 @@ button:hover {
     font-size: 40px;
     color: var(--color-primary);
     gap: 8px;
+    transition: 300ms all ease;
+    cursor: pointer;
 }
+
 
 .logo .input {
     background-color: #F0F2F5;
@@ -107,6 +110,7 @@ button:hover {
 }
 .input input {
     background-color: transparent;
+    color: var(--color-gray);
     padding: 8px;
     font-size: 1rem;
 }
@@ -168,7 +172,9 @@ nav .img {
     background-color: transparent !important;
     color: var(--color-gray);
     cursor: pointer;
-    padding: 8px;
+}
+.userElements .logout-btn:hover {
+    color: var(--color-primary);
 }
 
 
@@ -375,16 +381,41 @@ li.active::before {
 .group2 svg {
     cursor: pointer;
 }
-.group2 svg:nth-child(1)  {
-    color: red;
+.group2 button {
+    background-color: transparent;
+    color: var(--color-gray);
+    padding: 8px;
 }
-.group2 svg:nth-child(2)  {
+.group2 button:hover {
+    color: var(--color-primary);
+}
+.group2 label {
     color: green;
 }
+.group2 svg:nth-child(2)  {
+    color: red;
+}
 .group2 svg:nth-child(3)  {
+    color: green;
+}
+.group2 svg:nth-child(4)  {
     color: goldenrod;
 }
 
+.post-img-label {
+    position: relative;
+}
+.post-img-label.file-selected::before {
+    content: "";
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background-color: red;
+    top: 0;
+    right: 0;
+    position: absolute;
+    z-index: 11;
+}
 
 .createPost .img {
     height: 40px;

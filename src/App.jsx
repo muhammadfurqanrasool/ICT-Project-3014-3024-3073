@@ -6,14 +6,25 @@ import { useAuth } from './context/AuthContext';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-function ProtectedRoute({children}) {
+function ProtectedRoute({children, auth=true}) {
   const {User} = useAuth();
-    if(User) {
+
+  if(auth) {
+
+    if(User && auth) {
+      return children;
+    }
+    else return <Navigate to="/login" replace/>
+  }else {
+    if(!User && !auth) {
         return children;
       }
-    else return <Navigate to="/login" replace/>
+    else return <Navigate to="/" replace/>
       
     } 
+  } 
+    
+
     
 const App = () => {
   const { GetUser } = useAuth();
@@ -27,12 +38,12 @@ const App = () => {
         <Route path='/' element={<Layout/>}>
           <Route index element={<ProtectedRoute><Home/></ProtectedRoute>} />
           <Route path='chats' element={<ProtectedRoute><Chats/></ProtectedRoute>} />
-          <Route path='profile' element={<ProtectedRoute><Profile/></ProtectedRoute>} />
-          <Route path='people' element={<ProtectedRoute><People/></ProtectedRoute>} />
+          <Route path='profile' element={<ProtectedRoute ><Profile/></ProtectedRoute>} />
+          <Route path='people' element={<ProtectedRoute ><People/></ProtectedRoute>} />
         </Route>
         <Route path='/' element={<AuthLayout/>}>
-          <Route path='login' element={<Login/>}/>
-          <Route path='register' element={<Register/>}/>
+          <Route path='login' element={<ProtectedRoute auth={false}><Login/></ProtectedRoute>}/>
+          <Route path='register' element={<ProtectedRoute auth={false}><Register/></ProtectedRoute>}/>
         </Route>
 
         <Route path='/*' element={<h1>Error 404, Page Not Found!</h1>}></Route>

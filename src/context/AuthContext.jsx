@@ -22,7 +22,6 @@ const AuthContextProvider = ({children}) => {
             const userData = JSON.parse(storedUser);
             setUser(userData);
             setIsLoading(false); 
-            console.log('User data loaded instantly from localStorage.');
             } 
             else {
             setIsLoading(true);

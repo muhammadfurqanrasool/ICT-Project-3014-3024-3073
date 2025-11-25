@@ -7,6 +7,7 @@ import NewsFeed from "../components/NewsFeed";
 
 const Profile = () => {
     const {User} = useAuth();
+    console.log(User.posts)
   return (
     <div className='profile'>
         <div className="cover">
@@ -19,8 +20,8 @@ const Profile = () => {
                 </div>
                 <p>Hey There! I'm using {appName}</p>
                 <div className="info">
-                    <span className="fnds">Friends: {friends.length}</span>
-                    <span className="posts">Posts: 23</span>
+                    <span className="fnds">Friends: {User.friends?.length}</span>
+                    <span className="posts">Posts: {User.posts?.length}</span>
                 </div>
             </div>
         </div>

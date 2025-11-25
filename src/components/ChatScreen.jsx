@@ -9,7 +9,7 @@ const ChatScreen = () => {
         <>
         <div className="top">
             <div className="img">
-                <img src={IMG} alt="img" />
+                <img src={selectedUser?.photoURL} alt="img" />
             </div>
             <span>{selectedUser?.fullName || "Unknown User"}</span>
         </div>

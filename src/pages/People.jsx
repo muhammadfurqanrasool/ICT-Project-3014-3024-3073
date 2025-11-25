@@ -4,18 +4,12 @@ import "../css/people.css"
 import axios from "axios";
 import { host } from "../utils";
 import { HiUserAdd } from "react-icons/hi";
+import { useAuth } from "../context/AuthContext";
+import UserCard from "../components/UserCard";
 const People = () => {
     const [users,setUsers] = useState([]);
-    const handleAddFriend = async(e)=> {
-        e.preventDefault();
-        const id = e.target.id;
-
-        if(id) {
-            await axios.post(`${host}/api/profile/people/add`, {person_id: id});
-            alert("Friend Added!");
-        }
-        // console.log(id)
-    }
+    const {User} = useAuth();
+    
 
     useEffect(()=>{
         console.log('Hello  ')
@@ -43,7 +37,7 @@ const People = () => {
             <h2>People You may know: </h2>
             <ul>
                 {users.map((usr)=>{
-                    return  <li key={usr._id} className={`person ${usr.status && "active"}`}><div className="img"><img src={usr?.photoURL} alt="" /></div> <span>{usr?.fullName}</span> <button className="addme" id={usr?._id} onClick={handleAddFriend}><HiUserAdd /></button></li>
+                    return  <UserCard key={usr?._id} user={usr}/>
                 })}
             </ul>
         </div>
