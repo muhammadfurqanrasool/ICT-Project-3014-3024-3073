@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { appName, CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET, host } from '../utils'
 import IMG from "/assets/user-male-circle.jpg"
 import "../css/register.css"
-import { useNavigate } from 'react-router-dom'
+import { replace, useNavigate } from 'react-router-dom'
 import { FaPlus } from 'react-icons/fa'
 import axios from 'axios'
 const Register = () => {
@@ -41,7 +41,8 @@ const Register = () => {
           fullName:form.fullName, email:form.email, password:form.password, photoURL :preview
         });
         console.log(result);
-        // console.log(data.secure_url)
+        navigate("/", {replace:true})
+        window.location.reload();
         } catch (error) {
             console.log(error);
         }

@@ -75,7 +75,7 @@ export const friends = [
 
 
 export const host = "http://localhost:7777"
-export const appName = "facebook"
+export const appName = "Connectify"
 export const CLOUDINARY_URL="cloudinary://578639692618178:eyNPi7hM_rb0FZRsREjPC6ZklDM@drwl8gjwd";
 export const CLOUDINARY_UPLOAD_PRESET= "ict-project"
 export const CLOUDINARY_CLOUD_NAME="drwl8gjwd"

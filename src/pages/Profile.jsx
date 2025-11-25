@@ -2,6 +2,7 @@ import IMG from "/assets/user-male-circle.jpg"
 import {useAuth} from "../context/AuthContext"
 import "../css/profile.css"
 import { appName, friends } from "../utils";
+import NewsFeed from "../components/NewsFeed";
 
 
 const Profile = () => {
@@ -23,6 +24,7 @@ const Profile = () => {
                 </div>
             </div>
         </div>
+        {/* <NewsFeed personal={false}/> */}
     </div>
   )
 }

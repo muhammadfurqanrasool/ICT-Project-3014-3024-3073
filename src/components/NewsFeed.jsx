@@ -4,16 +4,22 @@ import { AiFillPicture } from "react-icons/ai"
 import { FaRegFaceSmileWink } from "react-icons/fa6"
 import NewsCard from "./NewsCard"
 import { useAuth } from "../context/AuthContext"
+import { useEffect, useState } from "react"
 
 
-function NewsFeed() {
+function NewsFeed(personal=true) {
     const {User} = useAuth();
+    const [posts,setPosts] = useState([]);
+
+    useEffect(()=>{
+
+    }, [])
     return (
         <div className="newsfeed">
-            <div className="createPost">
+           { personal? <form className="createPost">
                 <div className="group1">
                     <div className="img">
-                        <img src={IMG} alt="" />
+                        <img src={User?.photoURL} alt="" />
                     </div>
                     <input type="text" placeholder={`What's in your mind? ${User?.fullName}`} />
                 </div>
@@ -23,12 +29,17 @@ function NewsFeed() {
                     <AiFillPicture />
                     <FaRegFaceSmileWink />
                 </div>
-            </div>
-
+            </form> : <></>}
+            {
+                posts.map(post=>{
+                    return <NewsCard key={post._id} postData={post}/>
+                })
+            }
+            
+            
             <NewsCard/>
             <NewsCard/>
             <NewsCard/>
-            {/* <NewsCard/> */}
         </div>
     )
 }

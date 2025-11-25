@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const {Login} = useAuth();
+  const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
     const email = e.target.email.value;
@@ -13,15 +14,15 @@ const Login = () => {
 
     try {
       const {data} = await axios.post(`${host}/api/auth/login`, {email,password});
-      
       console.log(data);
       Login(data);
-      
+      navigate("/", {replace:true});
+      window.location.reload();
     } catch (error) {
       
     }
   }
-  const navigate = useNavigate();
+  
   return (
     <div className="container login">
         <div className="text">

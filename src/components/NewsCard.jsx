@@ -1,7 +1,4 @@
 import React, { useState } from 'react'
-import IMG from "/assets/user-male-circle.jpg"
-import IMG2 from "/assets/windows11.png"
-import { user } from '../utils'
 import { SlOptions } from 'react-icons/sl'
 import { RxCross2 } from 'react-icons/rx'
 import { FaRegComment, FaRegHeart } from 'react-icons/fa6'
@@ -9,9 +6,8 @@ import { FaHeart } from 'react-icons/fa6'
 import { PiPaperPlaneTiltBold } from 'react-icons/pi'
 
 
-const NewsCard = () => {
+const NewsCard = ({postData={user : {fullName: "Unknown", photoURL: "/assets/user-male-cirlce.jpg"}, content: " Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem iste eius similique labore voluptatem. Vitae nulla perspiciatis earum cupiditate obcaecati!",photoURL: "/assets/windows11.png"}}) => {
     const [liked,setLiked] = useState(false);
-
     function clicked() {
         setLiked(prev => !prev);
     }
@@ -20,9 +16,9 @@ const NewsCard = () => {
         <div className="head">
             <div className="user">
                 <div className="img">
-                    <img src={IMG} alt="" />
+                    <img src={"/assets/user-male-circle.jpg"} alt="" />
                 </div>
-                        <span>{user.fullName}</span>
+                        <span>{"John Doe"}</span>
             </div>
             <div className="options">
                 <SlOptions />
@@ -30,19 +26,19 @@ const NewsCard = () => {
             </div>
         </div>
         <div className="postContent">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem iste eius similique labore voluptatem. Vitae nulla perspiciatis earum cupiditate obcaecati!
+            {postData.content}
         </div>
         <div onDoubleClick={clicked} className="postImg">
            {liked && <FaHeart  className='filled'/>}
-            <img src={IMG2} alt="img" />
+            <img src={postData.photoURL || "/assets/windows11.png"} alt="img" />
         </div>
         <div className="reactions">
             
                <abbr title="Like">
             <button onClick={clicked}>
-                 {
-                     liked? <FaHeart size={22}  className='filled'/> : <FaRegHeart size={22}/>
-                    }
+                {
+                   liked? <FaHeart size={22}  className='filled'/> : <FaRegHeart size={22}/>
+                }
             </button>
                     </abbr>
             <abbr title="Comment">

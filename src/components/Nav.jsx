@@ -7,6 +7,7 @@ import { Link, useLocation } from "react-router-dom"
 import {useAuth} from "../context/AuthContext";
 import { LogOutIcon } from "lucide-react"
 import "../css/style.css"
+import { appName } from "../utils"
 const Nav = () => {
   const location = useLocation();
   const {User, LogOut} = useAuth();
@@ -17,12 +18,12 @@ const Nav = () => {
             <FaFacebook />
             <div className="input">
                 <div className="searchIcon"><CiSearch /></div>
-                <input type="text" placeholder="Search Facebook" />
+                <input type="text" placeholder={`Search ${appName}`} />
             </div>
         </div>
         <div className="navElements">
             <Link to="/" className={`${location.pathname == "/" && "active"}`}><BiSolidHome /></Link>
-            <Link to="/"><HiUsers /></Link>
+            <Link to="/people" className={`${location.pathname == "/people" && "active"}`}><HiUsers /></Link>
             <Link to="/"><PiVideoBold /></Link>
             <Link to="/profile"  className={`${location.pathname == "/profile" && "active"}`}><FaRegUserCircle /></Link>
         </div>
