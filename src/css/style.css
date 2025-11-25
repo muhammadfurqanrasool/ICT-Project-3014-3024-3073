@@ -1,7 +1,14 @@
+@import "tailwindcss";
+
+
 :root {
     --color-primary : #0866ff;
-    --color-bg: #f7f4f7;
     --color-gray: #65686c;
+    --color-hover: #1877f2;
+    --color-bg: #f2f4f7;
+    --color-lime: #42b72a;
+    --nav-height: 70px; /* Define nav height for consistent spacing */
+    --shadow-light: 0 0 4px rgba(0,0,0,0.1);
 }
 
 
@@ -18,20 +25,62 @@ a {
     text-decoration: none;
     color: inherit;
 }
+a.active {
+    color: var(--color-primary);
+}
+
+/* FIX 1: Ensure body and html occupy full height and remove unwanted overflow on body */
+html, body {
+    height: 100%;
+    /* overflow: hidden; Removed to allow for controlled scrolling */
+    scrollbar-width: none;
+}
 
 body {
     background-color: var(--color-bg);
+    /* Remove redundant overflow-x hidden */
 }
 nav {
     display: flex;
-    background-color: #fff;
+    background: rgba(255,255,255,0.9);
     align-items: center;
     justify-content: space-between; 
-    padding: 5px 1.5rem;
-    
+    padding: 0 1.5rem;
+    position:sticky;
+    top: 0;
+    z-index: 11;
+    backdrop-filter: blur(10px);
+    /* FIX: Changed width from 100vw to 100% to follow standard flow */
+    width: 100%; 
+    /* FIX 2: Explicitly set height based on padding, or use var */
+    height: var(--nav-height); 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Added subtle shadow */
+}
+button {
+    padding: 1rem;
+    border-radius: 6px;
+    background-color: var(--color-primary);
+    transition: 300ms all ease;
+    color: #fff;
+    cursor: pointer;
 }
 
-nav .logo {
+button:hover {
+    background-color: var(--color-hover);
+}
+
+.container {
+    /* This container is likely used for AuthLayout, keeping as is */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 4rem;
+    height: 100vh;
+    background-color: var(--color-bg);
+    width: 100vw;
+}
+
+.logo {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -41,28 +90,29 @@ nav .logo {
 }
 
 .logo .input {
-    display: flex;
-    /* align-content: center; */
-    justify-content: center;
     background-color: #F0F2F5;
     border-radius: 20px;
     gap: 8px;
-    padding: 0 4px;
+    padding: 0 8px; /* Adjusted padding */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.input svg {
-    font-size: 1rem !important;
+.searchIcon {
+    font-size: 1.2rem;
     display: grid;
     place-items: center;
-    height: 100%;
+    color: var(--color-gray);
 }
 .input input {
-    /* padding: 8px 10px; */
-    background-color: #F0F2F5;
-    padding: 4px 8px;
+    background-color: transparent;
+    padding: 8px;
+    font-size: 1rem;
 }
 
 .navElements {
+    height: 100%;
     display: flex;
     align-content: center;
     justify-content: center;
@@ -71,21 +121,38 @@ nav .logo {
     color: var(--color-gray);
 }
 
-.navElements a:nth-child(1) {
-    color: var(--color-primary);
+.navElements a {
+    height: 100%;
+    padding: 0 1rem;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+.navElements a.active::after {
+    position: absolute;
+    left: 0 ;
+    content: "";
+    height: 4px;
+    width: 100%;
+    background-color: var(--color-primary);
+    bottom: 0;
 }
 
 .userElements {
     display: flex;
-    align-items: center;
     gap: 2rem;
     font-size:2rem ;
     color: var(--color-gray);
+    align-items: center;
+}
+.userElements a {
+    display: grid;
+    place-items: center;
 }
 
 nav .img {
-    height: 50px;
-    width: 50px;
+    height: 40px; /* Adjusted to 40px for better fit in nav */
+    width: 40px;
     overflow: hidden;
     border-radius: 50%;
     
@@ -97,38 +164,53 @@ nav .img {
     width: 100%;
     object-fit: cover;
 }
-
-.home {
-    width: 100vw;
-    /* background-color: green; */
-    display: flex;
-    gap: 4rem;
-
-}
-
-
-.newsfeed {
-    
-    flex: 2;
-}
-.friends {
-    flex: 1;
-    border-left: 1px solid gray;
+.userElements .logout-btn {
+    background-color: transparent !important;
+    color: var(--color-gray);
+    cursor: pointer;
     padding: 8px;
 }
-.sidebar{
-    flex: 1;
+
+
+/* ==========================HOME================================== */
+
+.home {
+    /* FIX: Changed width from 100vw to 100% to follow standard flow */
+    width: 100%;
+    /* FIX 3: Constrain the height of the main content area */
+    min-height: calc(100vh - var(--nav-height)); 
+    display: flex;
+    gap: 4rem; /* Reduced gap from 6rem for better space management */
+    padding: 1rem;
+    
 }
+
+/* FIX 4: Set the sidebars to be sticky and occupy vertical space */
+.sidebar, .friends {
+    /* Use flex-grow, flex-shrink, and flex-basis for explicit sizing */
+    flex: 0 1 250px; /* Do not grow (0), shrink (1), base width 250px */
+    min-width: 350px; /* Ensure they don't shrink below a usable width */
+    max-width: 350px; 
+    background-color: #fff;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-light);
+    position: sticky;
+    top: var(--nav-height);
+    height: calc(100vh - var(--nav-height) - 2rem);
+    overflow-y: auto;
+    padding: 8px;
+
+}
+
+/* The .sidebar and .friends classes share styling above, keeping individual settings minimal */
 .sidebar ul {
-    /* overflow-y: scroll; */
-    border-right : 1px solid gray;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     width: 100%;
     list-style: none;
-    padding: 8px;
+    padding: 8px 0;
     gap: 5px;
+    margin-bottom: 2rem;
 }
 
 .sidebar ul li {
@@ -141,23 +223,25 @@ nav .img {
     border-radius: 8px;
 }
 .sidebar ul li:hover {
-    background-color: rgb(194, 194, 194);
+    background-color: rgb(235, 235, 235); /* Lighter hover color */
+    cursor: pointer;
 }
-
 
 ul li .img {
     height: 25px;
     width: 25px;
     border-radius: 50%;
     overflow: hidden;
+    flex-shrink: 0;
 }
 .sidebar ul li svg {
     font-size: 25px;
-}
-.sidebar ul li:nth-child(2) svg{
-    color: var(--color-primary);
+    flex-shrink: 0;
 }
 .sidebar ul li:nth-child(3) svg{
+    color: var(--color-primary);
+}
+.sidebar ul li:nth-child(4) svg{
     color: magenta;
 }
 .img img {
@@ -165,19 +249,14 @@ ul li .img {
     width: 100%;
     object-fit: cover;
 }
-
-
-.newsfeed {
-    /* background-color: red; */
-    width: 50%;
-}
-
-
 .friends .options {
     display: flex;
     align-items: center;
     justify-content: space-between;
     color: var(--color-gray);
+    padding: 8px 0;
+    border-bottom: 1px solid #eee; /* Light separator */
+    margin-bottom: 10px;
 }
 .options .search {
     display: flex;
@@ -191,6 +270,7 @@ ul li .img {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    padding: 8px 0;
 }
 .friends ul li {
     padding: 8px;
@@ -199,20 +279,52 @@ ul li .img {
     gap: 1rem;
     border-radius: 8px;
     transition: 300ms all ease;
+    cursor: pointer;
 }
 
 .friends ul li .img {
-    height: 50px;
-    /* aspect-ratio: 1/1 !important; */
-    width: 50px;
+    height: 40px; /* Reduced to match nav/post size */
+    width: 40px;
 }
 
 .friends ul li:hover {
-    background-color: rgb(194, 194, 194);
+    background-color: rgb(235, 235, 235);
+}
+.activeNow h3 {
+    margin-top: 1rem;
+    color: var(--color-gray);
+}
+.friends .activeNow ul {
+    display: flex;
+    
+}
+li.active {
+    position: relative;
+}
+li.active::before {
+    content: "";
+    position: absolute;
+    background-color: green;
+    border: 2px solid white;
+    z-index: 8;
+    height: 10px;
+    width: 10px;
+    top:0.5rem;
+    left: 2.25rem;
+    border-radius: 50%;
 }
 
 /* ========NEWS FEEDS====================== */
-
+.newsfeed {
+    flex: 2; /* Allows it to grow and take up the remaining space */
+    /* FIX 5: Enforce minimum width of 0 to prevent content from pushing flex parent */
+    min-width: 0; 
+    
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem 2rem 1rem; /* Added bottom padding for space */
+    /* overflow-x is NOT needed here if child elements are constrained */
+}
 
 .newsfeed .createPost {
     display: flex;
@@ -222,8 +334,9 @@ ul li .img {
     padding: 10px;
     background-color: #fff;
     border-radius: 16px;
-    gap: 4rem;
-    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+    /* FIX 6: Reduced gap from 4rem for better responsiveness */
+    gap: 1rem; 
+    box-shadow: var(--shadow-light);
 
 }
 .filled {
@@ -232,32 +345,35 @@ ul li .img {
 
 .createPost .group1 {
     display: flex;
-    /* flex: 1; */
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 1rem;
     flex: 1;
-
+    /* FIX 7: Ensure this inner flex container doesn't overflow its parent */
+    min-width: 0; 
 }
 
 
 .group1 input {
     flex: 1;
-    
-    width: max-content;
-    padding: 10px 8px;
-    border-radius: 8px;
+    /* FIX: min-width: 0 is crucial for the input inside a flex item */
+    min-width: 0; 
+    padding: 10px;
+    border-radius: 20px; /* Made it pill-shaped */
     font-size: 1rem;
     background-color: #f0f2f5;
 }
 .createPost .group2 {
-    /* flex: 1; */
     width: fit-content;
     font-size: 1.7rem;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
+    flex-shrink: 0; /* Prevents icons from shrinking */
+}
+.group2 svg {
+    cursor: pointer;
 }
 .group2 svg:nth-child(1)  {
     color: red;
@@ -275,16 +391,18 @@ ul li .img {
     aspect-ratio: 1/1;
     border-radius: 50%;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .newscard {
     margin-top: 1rem;
-    height: fit-content;
+    /* FIX: Added min-width 0 here too for safety */
+    min-width: 0; 
     width: 100%;
     background-color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    padding: 8px;
-    border-radius: 1rem;
+    box-shadow: 0 0 4px rgba(0,0,0,0.1); /* Lighter shadow */
+    padding: 15px; /* Increased padding */
+    border-radius: 10px;
 }
 
 .newscard .head .user .img {
@@ -298,7 +416,7 @@ ul li .img {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1rem;
-    border-bottom : 1px solid lightgray;
+    border-bottom : 1px solid #eee; /* Lighter divider */
     padding-bottom: 8px;
 }
 .head .user {
@@ -313,20 +431,22 @@ ul li .img {
     justify-content: center;
     gap: 1rem;
     font-size: 1.5rem;
-    /* font-weight: 600; */
+    cursor: pointer;
 }
 
 .newscard .postContent {
     margin-bottom: 1rem;
+    word-break: break-word; /* Ensure long words break */
 }
 
 .newscard .postImg {
     position: relative;
-    height: 500px;
+    /* FIX 8: Use max-height instead of fixed height for better responsiveness */
+    max-height: 500px;
     width: 100%;
+    border-radius: 8px;
     overflow: hidden;
 }
-
 .postImg svg {
     position: absolute;
     left: 50%;
@@ -341,36 +461,45 @@ ul li .img {
     object-fit: cover;
 }
 
+
 .newscard .reactions {
-    padding: 1rem;
-    /* font-size: 2rem; */
+    padding: 1rem 0 0 0; /* Adjusted padding */
     width: 100%;
     display: flex;
-    align-items: center;
-    width: fit-content;
-    gap: 2rem;
-    /* justify-content: space-between; */
+    justify-content: space-around;
+    border-top: 1px solid #eee;
+    margin-top: 10px;
 }
 .reactions button {
-    color: rgb(96, 96, 96);
+    color: var(--color-gray);
     background-color: transparent;
-
+    transition: 300ms all ease;
+    padding: 8px 16px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
+.reactions button:hover {
+    background-color: #f0f2f5;
+    color: var(--color-gray);
+}
+
 
 @keyframes hide {
     0% {
-        /* transform: scale(0); */
-        color: white;
         opacity: 0;
+        transform: scale(0.5) translateX(-50%) translateY(-50%);
     }
 
     20%, 60%,80% {
-        /* transform: scale(1); */
         opacity: 1;
+        transform: scale(1.2) translateX(-50%) translateY(-50%);
         color: red;
     
     }
      100% {
         opacity: 0;
+        transform: scale(1) translateX(-50%) translateY(-50%);
     }
 }

@@ -3,9 +3,11 @@ import IMG from "/assets/user-male-circle.jpg"
 import { AiFillPicture } from "react-icons/ai"
 import { FaRegFaceSmileWink } from "react-icons/fa6"
 import NewsCard from "./NewsCard"
+import { useAuth } from "../context/AuthContext"
 
 
 function NewsFeed() {
+    const {User} = useAuth();
     return (
         <div className="newsfeed">
             <div className="createPost">
@@ -13,7 +15,7 @@ function NewsFeed() {
                     <div className="img">
                         <img src={IMG} alt="" />
                     </div>
-                    <input type="text" placeholder="What's in your mind? Marium Jamshed" />
+                    <input type="text" placeholder={`What's in your mind? ${User?.fullName}`} />
                 </div>
 
                 <div className="group2">
@@ -26,7 +28,7 @@ function NewsFeed() {
             <NewsCard/>
             <NewsCard/>
             <NewsCard/>
-            <NewsCard/>
+            {/* <NewsCard/> */}
         </div>
     )
 }

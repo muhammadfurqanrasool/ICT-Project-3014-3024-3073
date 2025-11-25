@@ -1,45 +1,39 @@
-import { createContext, useContext, useLayoutEffect, useState } from 'react'
-import {users} from "../utils/users";
+import { createContext, useContext, useEffect, useLayoutEffect, useState } from 'react'
+import {host, user , users} from "../utils";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 export const AuthContext = createContext()
 
 const AuthContextProvider = ({children}) => {
-    const [user,setUser] = useState(users[0]);
+    const [User,setUser] = useState(null);
     const [error,setError] = useState(null);
+    const [selectedUser, setSelectedUser] = useState(null);
+    const navigate = useNavigate()
     const KEY = "authToken";
-    useLayoutEffect(()=>{
-        GetUser();
-    },[])
+
+    async function GetUser() {
+        const {data} = await axios.get(`${host}/api/profile`);
+        console.log(data);
+        setUser(data);
+    }
 
     function showError(message) {
         setError({status:true, message});
     }
-    function Login({email, password}) {
-        users.forEach(usr=>{
-            if(usr.email == email) {
-                if(usr.password == password) {
-                    localStorage.setItem(KEY, JSON.stringify(usr));
-                    setUser(usr);
-                }
-            }
-            else {
-                showError("Invalid credentials!");
-            }
-        })
+    function Login(data) {
+        setUser(data);
+        navigate("/", {replace:true})
+
     }
-    function LogOut() {
+    async function LogOut() {
+        await axios.get(`${host}/api/auth/logout`);
         localStorage.removeItem(KEY);
         setUser(null);
+        navigate("/login", {replace:true})
     }
-    function GetUser() {
-        const data = JSON.parse(localStorage.getItem(KEY));
-
-        if(Object.length > 0) {
-            setUser(data);
-        }
-        else setUser(null);
-    }
+    
   return (
-    <AuthContext.Provider value={{user, Login, LogOut, error}}>
+    <AuthContext.Provider value={{User, Login, LogOut,GetUser, error, selectedUser,setSelectedUser}}>
         {children}
     </AuthContext.Provider>
   )

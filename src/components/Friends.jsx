@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { SlOptions } from 'react-icons/sl'
-import { friends, users } from '../utils/users'
+import { friends, users } from '../utils'
 import IMG from "/assets/user-male-circle.jpg"
 
 const Friends = () => {
@@ -17,10 +17,11 @@ const Friends = () => {
       </div>
 
       <ul>
-        {friends.map(user=>{
-          return <li><div className="img"><img src={IMG} alt="" /></div> <span>{user.fullName}</span></li>
+        {friends.map((user, key)=>{
+          return <li key={key} className={`${user.status && "active"}`}><div className="img"><img src={IMG} alt="" /></div> <span>{user.fullName}</span></li>
         })}
       </ul>
+      <hr />
     </div>
   )
 }
