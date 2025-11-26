@@ -5,6 +5,7 @@ import "./css/style.css";
 import { useAuth } from './context/AuthContext';
 import axios from 'axios';
 import { useEffect } from 'react';
+import NotFound from './pages/NotFound';
 
 function ProtectedRoute({children, auth=true}) {
   const {User} = useAuth();
@@ -46,7 +47,7 @@ const App = () => {
           <Route path='register' element={<ProtectedRoute auth={false}><Register/></ProtectedRoute>}/>
         </Route>
 
-        <Route path='/*' element={<h1>Error 404, Page Not Found!</h1>}></Route>
+        <Route path='/*' element={<NotFound/>}></Route>
       </Routes>
 
   )

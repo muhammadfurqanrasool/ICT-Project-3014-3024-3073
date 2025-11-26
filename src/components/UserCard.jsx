@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { HiUserAdd } from 'react-icons/hi';
 import { useAuth } from '../context/AuthContext';
 import { FaUserCheck } from 'react-icons/fa6';
+import { host } from '../utils';
 
 const UserCard = ({user}) => {
     const [isMyFriend, setIsMyFriend] = useState(false);
@@ -19,8 +20,10 @@ const UserCard = ({user}) => {
     useEffect(()=>{
         if(User.friends.includes(user._id)) setIsMyFriend(true)
     },[])
-  return (
-    <li key={user._id} className={`person ${user.status && "active"}`}>
+  return (<>
+    {   
+        !isMyFriend?
+        (<><li key={user._id} className={`person`}>
         <div className="grp">
 
         <div className="img"><img src={user?.photoURL} alt="" /></div> 
@@ -31,8 +34,8 @@ const UserCard = ({user}) => {
                 {!isMyFriend?
                     <HiUserAdd />: <FaUserCheck />}
         </button>
-    </li>
-  )
+    </li> </>):<></>}
+ </> )
 }
 
 export default UserCard

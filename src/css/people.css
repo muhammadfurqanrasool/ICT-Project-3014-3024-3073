@@ -54,4 +54,5 @@
 
 .addme.friended {
     background-color: var(--color-lime);
+    /* display: none; */
 }

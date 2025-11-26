@@ -15,6 +15,7 @@ function NewsFeed(personal=true) {
     const navigate = useNavigate();
     const [posts,setPosts] = useState([]);
     const [preview,setPreview] = useState(null);
+    console.log(preview)
 
     async function sendPost(e) {
         e.preventDefault();
